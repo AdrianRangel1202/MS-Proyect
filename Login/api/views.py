@@ -8,25 +8,24 @@ from django.contrib.auth.hashers import make_password
 
 @api_view(["GET"])
 def UsersViews(request):
-    if request.method == "GET":
-        users = User.objects.all()
-        srlz = UserSerializer(users, many=True)
-        return Response(srlz.data)
+
+    users = User.objects.all()
+    srlz = UserSerializer(users, many=True)
+    return Response(srlz.data)
     
 @api_view(["POST"])
 def Insert_Users(request):
-    if request.method == "POST":
-        data_user = request.data
-        password = make_password(data_user["password"])
-        User.objects.create(username = data_user["username"],
-                            email = data_user["email"],
-                            password = password)
-    user = User.objects.filter(username = data_user["username"])
-    srlz = UserSerializer(user, many = True)
-    return Response(srlz.data)
+
+    data = request.data
+    User.objects.create(username = data["username"],
+                            email = data["email"],
+                            password = make_password(data["password"]))
+    
+    return Response({"Mensaje":"User Create successfully"}, status=status.HTTP_201_CREATED)
 
 @api_view(["PUT"])
 def put_user(request):
+
     try:
         data = request.data
         up_user = User.objects.get(id = data["username"])
@@ -43,7 +42,7 @@ def put_user(request):
 
     new_user = User.objects.get(username = data["username"])
     srlz = UserSerializer(new_user)
-    return Response(srlz.data)
+    return Response({"Mensaje": "User Update successfully"}, status=status.HTTP_200_OK)
   
 @api_view(["DELETE"])
 def Del_user(request):
@@ -59,5 +58,3 @@ def Del_user(request):
     user.delete()
     return Response({"mensaje":"User deleted successfully"}, status=status.HTTP_200_OK)
 
-
-# {"username":"adrian", "email": "Hola@gmail.com", "password": "hola"}
