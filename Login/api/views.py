@@ -40,8 +40,6 @@ def put_user(request):
     up_user.password = make_password(data["password"])
     up_user.save()
 
-    new_user = User.objects.get(username = data["username"])
-    srlz = UserSerializer(new_user)
     return Response({"Mensaje": "User Update successfully"}, status=status.HTTP_200_OK)
   
 @api_view(["DELETE"])
