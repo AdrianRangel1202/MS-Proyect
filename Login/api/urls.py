@@ -1,9 +1,6 @@
 from django.urls import path
 from .views import UsersViews, Insert_Users, put_user, Del_user
-from rest_framework import routers
 
-#router = routers.DefaultRouter()
-#router.register(r'Users', UsersViews, basename="Create_users")
 
 urlpatterns = [
     path('get_user', UsersViews, name = "Vista_de_usuarios"),
