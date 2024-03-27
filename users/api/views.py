@@ -8,7 +8,6 @@ from django.contrib.auth.hashers import make_password
 
 @api_view(["GET"])
 def UsersViews(request):
-
     users = User.objects.all()
     srlz = UserSerializer(users, many=True)
     return Response(srlz.data)
